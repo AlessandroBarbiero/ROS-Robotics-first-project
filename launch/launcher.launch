@@ -1,0 +1,19 @@
+<launch>
+    <!--
+    <param name="InitialX" value=0 />
+    <param name="InitialY" value=0 />
+    <param name="InitialTheta" value=0 />
+
+    <node pkg="project_1" type="LateralWheelSync" name="RightWheelSync">
+        <remap from="frontWheel" to="..."/>
+        <remap from="rearWheel" to="..."/>
+    </node>
+    <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync">
+        <remap from="frontWheel" to="..."/>
+        <remap from="rearWheel" to="..."/>
+    </node>
+    <node pkg="package" type="file_name" name="node_name"/>
+    <node pkg="package" type="file_name" name="node_name"/>
+    <node pkg="package" type="file_name" name="node_name"/>
+-->
+</launch>
