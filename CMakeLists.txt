@@ -9,6 +9,7 @@ find_package(
 	geometry_msgs 
 	nav_msgs
 	message_generation
+	message_filters
 	)
 
 add_message_files(
@@ -27,6 +28,8 @@ generate_messages(
 catkin_package(
 	CATKIN_DEPENDS 
 	message_runtime
+	message_filters
+	geometry_msgs
 	)
 #never change this line
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -36,4 +39,4 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 #target_link_libraries(lateralWheelSync ${catkin_LIBRARIES})
 
 # Add this only for nodes that requires the specific custom message generated in the package
-# add_dependencies(executable_name project_1_generate_messages_cpp)
+add_dependencies(lateralWheelSync robotics_hw1_generate_messages_cpp)
