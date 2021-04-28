@@ -110,7 +110,6 @@ public:
         //TODO: mettere topic delle velocità
         sub = n.subscribe("/topic", 1, &Pub_sub_odometry::computeOdometry, this);
 
-        //odometry(n);
         //odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);//todo: non è std_msgs
         //lastTime = ros::Time::now(); //todo: oppure leggo il primo header dal topic e inizializzo solo la prima volta
     }
