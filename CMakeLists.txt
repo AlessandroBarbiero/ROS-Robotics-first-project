@@ -34,9 +34,12 @@ catkin_package(
 #never change this line
 include_directories(include ${catkin_INCLUDE_DIRS})
 
+add_executable(AgileXCore src/AgileXCore.cpp)
+target_link_libraries(AgileXCore ${catkin_LIBRARIES})
+
 # This two lines are needed for every node
-#add_executable(lateralWheelSync src/lateralWheelSync.cpp)
-#target_link_libraries(lateralWheelSync ${catkin_LIBRARIES})
+add_executable(lateralWheelSync src/LateralWheelSync.cpp)
+target_link_libraries(lateralWheelSync ${catkin_LIBRARIES})
 
 # Add this only for nodes that requires the specific custom message generated in the package
 add_dependencies(lateralWheelSync robotics_hw1_generate_messages_cpp)
