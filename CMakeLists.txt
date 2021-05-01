@@ -16,6 +16,7 @@ find_package(
 add_message_files(
 	FILES 
 	CustomOdometry.msg
+	Speed.msg
 	)
 #add this when implementing services
 # add_service_files(FILES custom_service.srv)
@@ -27,7 +28,8 @@ generate_messages(
 	)
 
 catkin_package(
-	CATKIN_DEPENDS 
+	CATKIN_DEPENDS
+	std_msgs
 	message_runtime
 	message_filters
 	geometry_msgs
@@ -35,12 +37,13 @@ catkin_package(
 #never change this line
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(AgileXCore src/AgileXCore.cpp)
-target_link_libraries(AgileXCore ${catkin_LIBRARIES})
+# add_executable(AgileXCore src/AgileXCore.cpp)
+# target_link_libraries(AgileXCore ${catkin_LIBRARIES})
 
 # This two lines are needed for every node
-add_executable(lateralWheelSync src/LateralWheelSync.cpp)
-target_link_libraries(lateralWheelSync ${catkin_LIBRARIES})
+add_executable(LateralWheelSync src/LateralWheelSync.cpp)
+target_link_libraries(LateralWheelSync ${catkin_LIBRARIES})
 
 # Add this only for nodes that requires the specific custom message generated in the package
-add_dependencies(lateralWheelSync robotics_hw1_generate_messages_cpp)
+add_dependencies(LateralWheelSync robotics_hw1_generate_messages_cpp)
+add_dependencies(LateralWheelSync project_1_generate_messages_cpp)

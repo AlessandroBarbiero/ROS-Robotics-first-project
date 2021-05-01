@@ -1,9 +1,12 @@
 #include "ros/ros.h"
 #include "robotics_hw1/MotorSpeed.h"
+#include "project_1/Speed.h"
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
-
+#define RPM_IN_RADIANS 0.1
+#define WHEEL_RADIUS 0.1575
+#define GEAR_RATIO 1/35
 class LateralWheelSync
 {
 
@@ -25,7 +28,7 @@ public:
     LateralWheelSync(){
         sub1.subscribe(n, "/motor_speed_fl", 1);
         sub2.subscribe(n, "/motor_speed_rl", 1);
-        pub = n.advertise<robotics_hw1::MotorSpeed>("/syncVelocity", 1);
+        pub = n.advertise<project_1::Speed>("/syncVelocity_l", 1);
         sync.reset(new Sync(MySyncPolicy(10), sub1, sub2));
         //message_filters::Synchronizer<MySyncPolicy> sync(MySyncPolicy(10), sub1, sub2);
         sync->registerCallback(boost::bind(&LateralWheelSync::syncCallback, this, _1, _2));
@@ -34,10 +37,10 @@ public:
     void syncCallback(const robotics_hw1::MotorSpeed::ConstPtr& msg1,
                   const robotics_hw1::MotorSpeed::ConstPtr& msg2) {
         ROS_INFO ("syncCallback");
-        pub.publish(*msg1);
-        /*ROS_INFO ("Received two messages: (%f,%f,%f) and (%f,%f,%f)",
-                  msg1->vector.x,msg1->vector.y,msg1->vector.z,
-                  msg2->vector.x, msg2->vector.y, msg2->vector.z);*/
+        project_1::Speed speed;
+        speed.header = msg1->header;
+        speed.metersXSecond = (msg1->rpm + msg2->rpm)*RPM_IN_RADIANS*GEAR_RATIO*WHEEL_RADIUS/2;
+        pub.publish(speed);
     }
 
 

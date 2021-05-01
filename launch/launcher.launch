@@ -3,15 +3,22 @@
     <param name="InitialX" value=0 />
     <param name="InitialY" value=0 />
     <param name="InitialTheta" value=0 />
+-->
 
+    <!-- Launch the bag1 and show on screen -->
+    <arg name="path" default="/bags/" />
+    <arg name="file1" default="bag1" />
+    <node pkg="rosbag" type="play" name="player" output="screen" args="$(find project_1)$(arg path)$(arg file1).bag"/>
+
+    <!-- Launch the two Sync for left and right lateral wheels -->
+    <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync"/>
     <node pkg="project_1" type="LateralWheelSync" name="RightWheelSync">
-        <remap from="frontWheel" to="..."/>
-        <remap from="rearWheel" to="..."/>
+        <remap from="/motor_speed_fl" to="/motor_speed_fr"/>
+        <remap from="/motor_speed_rl" to="/motor_speed_rr"/>
+        <remap from="/syncVelocity_l" to="/syncVelocity_r"/>
     </node>
-    <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync">
-        <remap from="frontWheel" to="..."/>
-        <remap from="rearWheel" to="..."/>
-    </node>
+
+    <!--
     <node pkg="package" type="file_name" name="node_name"/>
     <node pkg="package" type="file_name" name="node_name"/>
     <node pkg="package" type="file_name" name="node_name"/>
