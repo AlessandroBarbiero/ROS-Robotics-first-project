@@ -62,7 +62,7 @@ public:
         odometry.pose.pose.position.z = 0.0;
         odometry.pose.pose.orientation = odometryQuaternion;
         //set velocity
-        odometry.child_frame_id = "baseLInk";
+        odometry.child_frame_id = "baseLink";
         odometry.twist.twist.linear.x = vx;
         odometry.twist.twist.linear.y = 0;
         odometry.twist.twist.angular.z = w;

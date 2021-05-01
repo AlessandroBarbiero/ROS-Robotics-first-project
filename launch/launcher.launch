@@ -18,8 +18,18 @@
         <remap from="/syncVelocity_l" to="/syncVelocity_r"/>
     </node>
 
-    <!--
-    <node pkg="package" type="file_name" name="node_name"/>
+    <!-- Launch the GlobalSync -->
+    <node pkg="project_1" type="GlobalSync" name="GlobalSync"/>
+
+
+    <!-- Attempt to Launch the echo of the /twist but the terminator window close immediately after open, so is useless
+    <arg name="topic1"     default="/twist"/>
+    <node pkg="rostopic" type="rostopic" name="TwistListener"
+          args="echo $(arg topic1)"  launch-prefix="terminator - -new-tab -x" />
+
+          -->
+
+    <!-- the others...
     <node pkg="package" type="file_name" name="node_name"/>
     <node pkg="package" type="file_name" name="node_name"/>
 -->

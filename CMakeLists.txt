@@ -24,6 +24,7 @@ add_message_files(
 generate_messages(
 	DEPENDENCIES 
 	nav_msgs
+	geometry_msgs
 	std_msgs
 	)
 
@@ -44,6 +45,11 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 add_executable(LateralWheelSync src/LateralWheelSync.cpp)
 target_link_libraries(LateralWheelSync ${catkin_LIBRARIES})
 
+add_executable(GlobalSync src/GlobalSync.cpp)
+target_link_libraries(GlobalSync ${catkin_LIBRARIES})
+
 # Add this only for nodes that requires the specific custom message generated in the package
 add_dependencies(LateralWheelSync robotics_hw1_generate_messages_cpp)
 add_dependencies(LateralWheelSync project_1_generate_messages_cpp)
+
+add_dependencies(GlobalSync project_1_generate_messages_cpp)

@@ -4,15 +4,11 @@
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
-#define RPM_IN_RADIANS 0.1
+#define RPM_IN_RADIANS 0.10472
 #define WHEEL_RADIUS 0.1575
-#define GEAR_RATIO 1/35
+#define GEAR_RATIO 1/35  //todo: calcolare quello reale
 class LateralWheelSync
 {
-
-    robotics_hw1::MotorSpeed message;
-    robotics_hw1::MotorSpeed message2;
-
 private:
     ros::NodeHandle n;
 
@@ -42,9 +38,6 @@ public:
         speed.metersXSecond = (msg1->rpm + msg2->rpm)*RPM_IN_RADIANS*GEAR_RATIO*WHEEL_RADIUS/2;
         pub.publish(speed);
     }
-
-
-
 
 
 };
