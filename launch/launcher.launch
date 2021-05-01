@@ -8,7 +8,7 @@
     <!-- Launch the bag1 and show on screen -->
     <arg name="path" default="/bags/" />
     <arg name="file1" default="bag1" />
-    <node pkg="rosbag" type="play" name="player" output="screen" args="$(find project_1)$(arg path)$(arg file1).bag"/>
+    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
     <!-- Launch the two Sync for left and right lateral wheels -->
     <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync"/>
@@ -20,6 +20,8 @@
 
     <!-- Launch the GlobalSync -->
     <node pkg="project_1" type="GlobalSync" name="GlobalSync"/>
+
+    <node pkg="project_1" type="AgileXCore" name="AgileXCore"/>
 
 
     <!-- Attempt to Launch the echo of the /twist but the terminator window close immediately after open, so is useless

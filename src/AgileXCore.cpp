@@ -3,7 +3,7 @@
 #include <nav_msgs/Odometry.h>
 #include "std_msgs/String.h"
 
-class MyOdometry{
+/*class MyOdometry{
 
 private:
     int x,y,th;
@@ -17,11 +17,11 @@ public:
         y=0;
         th=0;
         lastTime = ros::Time::now(); //todo: oppure leggo il primo header dal topic e inizializzo solo la prima volta
-        odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);//todo: non è std_msgs
+        odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);
     }
 
     void computeOdometry(const geometry_msgs::TwistStamped::ConstPtr& msg){
-        double vx, /*vy,*/ w, dt;
+        double vx, /*vy,*//* w, dt;
         ros::Time currentTime;
 
         //Reads currentTime from message's header
@@ -43,13 +43,13 @@ public:
         //Publish tf transformation
         publishTfTransformation(currentTime);
         //Publish odometry message
-        publishOdometry(vx, /*vy,*/ w, currentTime);
+        publishOdometry(vx, /*vy,*//* w, currentTime);
 
         //Updates last time
         lastTime= currentTime;
     }
 
-    void publishOdometry(double vx, /*double vy,*/ double w, ros::Time currentTime){
+    void publishOdometry(double vx, /*double vy,*//* double w, ros::Time currentTime){
         nav_msgs::Odometry odometry;
         geometry_msgs::Quaternion odometryQuaternion = tf::createQuaternionMsgFromYaw(th);
 
@@ -88,7 +88,7 @@ public:
         //publish transformation
         odom_broadcaster.sendTransform(odometryTransformation);
     }
-};
+};*/
 
 
 
@@ -97,29 +97,33 @@ class Pub_sub_odometry {
 private:
     ros::NodeHandle n;
     ros::Subscriber sub;
-    MyOdometry odometry = MyOdometry(n);
+    //MyOdometry odometry = MyOdometry(n);
 
-    /*ros::Time lastTime;
-    int x,y,th;
+    ros::Time lastTime;
+    double x,y,th;
     ros::Publisher odom_pub;
-    tf::TransformBroadcaster odom_broadcaster;*/
+    tf::TransformBroadcaster odom_broadcaster;
 
 
 public:
     Pub_sub_odometry() {
         //TODO: mettere topic delle velocità
-        sub = n.subscribe("/topic", 1, &Pub_sub_odometry::computeOdometry, this);
+        sub = n.subscribe("/twist", 1, &Pub_sub_odometry::computeOdometry2, this);
 
-        //odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);//todo: non è std_msgs
-        //lastTime = ros::Time::now(); //todo: oppure leggo il primo header dal topic e inizializzo solo la prima volta
+        odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);
+        lastTime = ros::Time::now(); //todo: oppure leggo il primo header dal topic e inizializzo solo la prima volta
+        //TODO: Devono essere sempre inizializzati a 0?
+        x = 0;
+        y = 0;
+        th = 0;
     }
 
-    void computeOdometry(const geometry_msgs::TwistStamped::ConstPtr& msg){
+    /*void computeOdometry(const geometry_msgs::TwistStamped::ConstPtr& msg){
         odometry.computeOdometry(msg);
-    }
+    }*/
 
-    /*void computeOdometry2(const geometry_msgs::TwistStamped::ConstPtr& msg){
-        double vx, /*vy,*//* w, dt;
+    void computeOdometry2(const geometry_msgs::TwistStamped::ConstPtr& msg){
+        double vx, /*vy,*/ w, dt;
         ros::Time currentTime;
 
         //Reads currentTime from message's header
@@ -127,7 +131,7 @@ public:
 
         //Computes dt from last message
         dt = (currentTime - lastTime).toSec();
-
+        //ROS_INFO("%lf", dt);
         //Computes reads linear and angular velocities from message
         vx = msg->twist.linear.x;
         //vy = msg->twist.linear.y;
@@ -138,16 +142,18 @@ public:
         y += vx * sin(th) * dt;
         th += w * dt;
 
+        //ROS_INFO("vx:%lf, x:%lf, y:%lf, th:%lf",vx, x, y, th);
+
         //Publish tf transformation
         publishTfTransformation(currentTime);
         //Publish odometry message
-        publishOdometry(vx, /*vy,*//* w, currentTime);
+        publishOdometry(vx, /*vy,*/ w, currentTime);
 
         //Updates last time
         lastTime= currentTime;
-    }*/
-    /*
-    void publishOdometry(double vx, /*double vy,*//* double w, ros::Time currentTime){
+    }
+
+    void publishOdometry(double vx, /*double vy,*/ double w, ros::Time currentTime){
         nav_msgs::Odometry odometry;
         geometry_msgs::Quaternion odometryQuaternion = tf::createQuaternionMsgFromYaw(th);
 
@@ -185,7 +191,7 @@ public:
 
         //publish transformation
         odom_broadcaster.sendTransform(odometryTransformation);
-    }*/
+    }
 };
 
 int main(int argc, char **argv) {

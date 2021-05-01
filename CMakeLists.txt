@@ -38,8 +38,8 @@ catkin_package(
 #never change this line
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-# add_executable(AgileXCore src/AgileXCore.cpp)
-# target_link_libraries(AgileXCore ${catkin_LIBRARIES})
+add_executable(AgileXCore src/AgileXCore.cpp)
+target_link_libraries(AgileXCore ${catkin_LIBRARIES})
 
 # This two lines are needed for every node
 add_executable(LateralWheelSync src/LateralWheelSync.cpp)
