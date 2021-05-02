@@ -35,4 +35,8 @@
     <node pkg="package" type="file_name" name="node_name"/>
     <node pkg="package" type="file_name" name="node_name"/>
 -->
+
+    <!-- opens rviz with custom configuration -->
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find project_1)/rviz/project_1.rviz" />
+
 </launch>
