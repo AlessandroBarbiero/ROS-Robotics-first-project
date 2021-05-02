@@ -11,8 +11,11 @@
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
     <!-- Launch the two Sync for left and right lateral wheels -->
-    <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync"/>
-    <node pkg="project_1" type="LateralWheelSync" name="RightWheelSync">
+    <arg name="reverseMotor" value="1" />
+    <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync" args="$(arg reverseMotor)"/>
+
+    <arg name="normalMotor" value="0"/>
+    <node pkg="project_1" type="LateralWheelSync" name="RightWheelSync" args="$(arg normalMotor)">
         <remap from="/motor_speed_fl" to="/motor_speed_fr"/>
         <remap from="/motor_speed_rl" to="/motor_speed_rr"/>
         <remap from="/syncVelocity_l" to="/syncVelocity_r"/>

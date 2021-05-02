@@ -21,13 +21,17 @@ private:
     boost::shared_ptr<Sync> sync;
 
 public:
-    LateralWheelSync(){
+    LateralWheelSync(int reverse){
         sub1.subscribe(n, "/motor_speed_fl", 1);
         sub2.subscribe(n, "/motor_speed_rl", 1);
         pub = n.advertise<project_1::Speed>("/syncVelocity_l", 1);
         sync.reset(new Sync(MySyncPolicy(10), sub1, sub2));
         //message_filters::Synchronizer<MySyncPolicy> sync(MySyncPolicy(10), sub1, sub2);
-        sync->registerCallback(boost::bind(&LateralWheelSync::syncCallback, this, _1, _2));
+
+        if(reverse==1)
+            sync->registerCallback(boost::bind(&LateralWheelSync::syncCallbackReverse, this, _1, _2));
+        else
+            sync->registerCallback(boost::bind(&LateralWheelSync::syncCallback, this, _1, _2));
     }
 
     void syncCallback(const robotics_hw1::MotorSpeed::ConstPtr& msg1,
@@ -39,13 +43,23 @@ public:
         pub.publish(speed);
     }
 
+    void syncCallbackReverse(const robotics_hw1::MotorSpeed::ConstPtr& msg1,
+                      const robotics_hw1::MotorSpeed::ConstPtr& msg2) {
+        ROS_INFO ("syncCallback");
+        project_1::Speed speed;
+        speed.header = msg1->header;
+        speed.metersXSecond = (-msg1->rpm - msg2->rpm)*RPM_IN_RADIANS*GEAR_RATIO*WHEEL_RADIUS/2;
+        pub.publish(speed);
+    }
+
 
 };
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "Synchronizer");
-    LateralWheelSync sync;
+    int reverse = atoi(argv[1]);
+    LateralWheelSync sync(reverse);
     ros::spin();
     return 0;
 }

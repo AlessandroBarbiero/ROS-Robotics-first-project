@@ -39,9 +39,8 @@ public:
         value.angular.x=0;
         value.angular.y=0;
 
-        //TODO: ho cambiato i segni a queste due formule; se mettiamo parameter per rpm, sistemare segni
-        value.linear.x = (velR->metersXSecond - velL->metersXSecond)/2;
-        value.angular.z = (velR->metersXSecond + velL->metersXSecond)/BASELINE;
+        value.linear.x = (velR->metersXSecond + velL->metersXSecond)/2;
+        value.angular.z = (velR->metersXSecond - velL->metersXSecond)/BASELINE;
 
         result.twist = value;
 
