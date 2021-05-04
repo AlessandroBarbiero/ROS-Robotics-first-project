@@ -3,10 +3,10 @@
 #include "geometry_msgs/TwistStamped.h"
 #include "geometry_msgs/Twist.h"
 #include <message_filters/subscriber.h>
-#include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
-#define BASELINE 0.583  //todo: this is the real baseline, we have to compute the apparent baseline and change this parameter
-
+// #define BASELINE 0.583  // real baseline
+ #define BASELINE 1.129 //considering only omega>0.005
+// #define BASELINE 1.16125063068 //considering all the omega>0
 class GlobalSync
 {
 private:
