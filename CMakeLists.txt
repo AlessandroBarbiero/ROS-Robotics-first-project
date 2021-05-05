@@ -11,7 +11,12 @@ find_package(
 	nav_msgs
 	message_generation
 	message_filters
+		dynamic_reconfigure
 	)
+
+generate_dynamic_reconfigure_options(
+		cfg/parameters.cfg
+)
 
 add_message_files(
 	FILES 
@@ -51,5 +56,8 @@ target_link_libraries(GlobalSync ${catkin_LIBRARIES})
 # Add this only for nodes that requires the specific custom message generated in the package
 add_dependencies(LateralWheelSync robotics_hw1_generate_messages_cpp)
 add_dependencies(LateralWheelSync project_1_generate_messages_cpp)
+
+#For dynamic reconfigure
+add_dependencies(AgileXCore ${PROJECT_NAME}_gencfg)
 
 add_dependencies(GlobalSync project_1_generate_messages_cpp)
