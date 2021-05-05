@@ -26,13 +26,15 @@
 
     <node pkg="project_1" type="AgileXCore" name="AgileXCore"/>
 
+    <!-- Launch the node for baseline calculation, not necessary -->
+    <node pkg="project_1" type="BaselineCalculator" name="BaselineCalculator"/>
 
-    <!-- Attempt to Launch the echo of the /twist but the terminator window close immediately after open, so is useless
+    <!-- Attempt to Launch the echo of the /twist but the terminator window close immediately after open, so is useless >
     <arg name="topic1"     default="/twist"/>
     <node pkg="rostopic" type="rostopic" name="TwistListener"
           args="echo $(arg topic1)"  launch-prefix="terminator - -new-tab -x" />
 
-          -->
+-->
 
     <!-- the others...
     <node pkg="package" type="file_name" name="node_name"/>
