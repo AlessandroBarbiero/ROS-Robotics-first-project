@@ -2,8 +2,10 @@
 #include <tf/transform_broadcaster.h>
 #include <nav_msgs/Odometry.h>
 #include "std_msgs/String.h"
+#include "project_1/CustomOdometry.h"
+#include <sstream>
 #include <dynamic_reconfigure/server.h>
-#include "project_1/integrationConfig.h"
+#include "project_1/integrationConfig
 
 /*class MyOdometry{
 
@@ -104,6 +106,7 @@ private:
     ros::Time lastTime;
     double x,y,th;
     ros::Publisher odom_pub;
+    ros::Publisher custom_pub;
     tf::TransformBroadcaster odom_broadcaster;
 
     int integrationType;
@@ -114,6 +117,7 @@ public:
         sub = n.subscribe("/twist", 1, &Pub_sub_odometry::computeOdometry2, this);
 
         odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);
+        custom_pub = n.advertise<project_1::CustomOdometry>("/custom", 10);
         lastTime = ros::Time::now(); //todo: oppure leggo il primo header dal topic e inizializzo solo la prima volta
         //TODO: Devono essere sempre inizializzati a 0?
         x = 0;
@@ -135,6 +139,7 @@ public:
 
         //Computes dt from last message
         dt = (currentTime - lastTime).toSec();
+        //ROS_INFO("%lf", dt);
         //Computes reads linear and angular velocities from message
         vx = msg->twist.linear.x;
         //vy = msg->twist.linear.y;
@@ -165,6 +170,7 @@ public:
     void publishOdometry(double vx, double w, ros::Time currentTime){
         nav_msgs::Odometry odometry;
         geometry_msgs::Quaternion odometryQuaternion = tf::createQuaternionMsgFromYaw(th);
+        project_1::CustomOdometry msg;
 
         //set header
         odometry.header.stamp = currentTime; //todo: time::now() o currentTime?
@@ -181,7 +187,10 @@ public:
         odometry.twist.twist.angular.z = w;
 
         //publish odometry
+        msg.odom = odometry;
+        //todo: pubblicare in custom metodo integrazione
         odom_pub.publish(odometry);
+        custom_pub.publish(msg);
     }
 
     void publishTfTransformation(ros::Time currentTime){
