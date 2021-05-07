@@ -139,7 +139,6 @@ public:
 
         //Computes dt from last message
         dt = (currentTime - lastTime).toSec();
-        //ROS_INFO("%lf", dt);
         //Computes reads linear and angular velocities from message
         vx = msg->twist.linear.x;
         //vy = msg->twist.linear.y;
