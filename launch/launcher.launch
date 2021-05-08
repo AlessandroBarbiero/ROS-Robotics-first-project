@@ -11,7 +11,7 @@
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
     <!-- Set the static transformation -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="worldToOdom" args="0 0 0 0 0 0 1 world odom" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="worldToOdom" args="-0.6963877171 -1.333971101 0.349301367998 -0.02329 -0.00191 -0.62861 -0.77737 world odom" />
 
     <!-- Launch the two Sync for left and right lateral wheels -->
     <arg name="reverseMotor" value="1" />
