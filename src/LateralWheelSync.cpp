@@ -16,7 +16,6 @@ private:
     message_filters::Subscriber<robotics_hw1::MotorSpeed> sub2;
     ros::Publisher pub;
     typedef message_filters::sync_policies::ApproximateTime<robotics_hw1::MotorSpeed, robotics_hw1::MotorSpeed> MySyncPolicy;
-    //message_filters::Synchronizer<MySyncPolicy> sync;
     typedef message_filters::Synchronizer<MySyncPolicy> Sync;
     boost::shared_ptr<Sync> sync;
 
@@ -26,7 +25,6 @@ public:
         sub2.subscribe(n, "/motor_speed_rl", 1);
         pub = n.advertise<project_1::Speed>("/syncVelocity_l", 1);
         sync.reset(new Sync(MySyncPolicy(10), sub1, sub2));
-        //message_filters::Synchronizer<MySyncPolicy> sync(MySyncPolicy(10), sub1, sub2);
 
         if(reverse==1)
             sync->registerCallback(boost::bind(&LateralWheelSync::syncCallbackReverse, this, _1, _2));

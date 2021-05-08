@@ -10,6 +10,9 @@
     <arg name="file1" default="bag1" />
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
+    <!-- Set the static transformation -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="worldToOdom" args="0 0 0 0 0 0 1 world odom" />
+
     <!-- Launch the two Sync for left and right lateral wheels -->
     <arg name="reverseMotor" value="1" />
     <node pkg="project_1" type="LateralWheelSync" name="LeftWheelSync" args="$(arg reverseMotor)"/>
@@ -25,6 +28,9 @@
     <node pkg="project_1" type="GlobalSync" name="GlobalSync"/>
 
     <node pkg="project_1" type="AgileXCore" name="AgileXCore"/>
+
+    <!-- Launch the dynamic configurator -->
+    <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 
     <!-- Launch the node for baseline calculation, not necessary -->
     <node pkg="project_1" type="BaselineCalculator" name="BaselineCalculator"/>

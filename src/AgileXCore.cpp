@@ -5,7 +5,7 @@
 #include "project_1/CustomOdometry.h"
 #include <sstream>
 #include <dynamic_reconfigure/server.h>
-#include "project_1/integrationConfig
+#include "project_1/integrationConfig.h"
 
 class Pub_sub_odometry {
 
@@ -27,7 +27,7 @@ public:
         sub = n.subscribe("/twist", 1, &Pub_sub_odometry::computeOdometry2, this);
 
         odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);
-        custom_pub = n.advertise<project_1::CustomOdometry>("/custom", 10);
+        custom_pub = n.advertise<project_1::CustomOdometry>("/custom", 1);
         lastTime = ros::Time::now();
         //TODO: Devono essere sempre inizializzati a 0?
         x = 0;
@@ -74,7 +74,7 @@ public:
     void publishOdometry(double vx, double w, ros::Time currentTime){
         nav_msgs::Odometry odometry;
         geometry_msgs::Quaternion odometryQuaternion = tf::createQuaternionMsgFromYaw(th);
-        project_1::CustomOdometry msg;
+        project_1::CustomOdometry customOdometry;
 
         //set header
         odometry.header.stamp = currentTime; //todo: time::now() o currentTime?
@@ -85,15 +85,22 @@ public:
         odometry.pose.pose.position.z = 0.0;
         odometry.pose.pose.orientation = odometryQuaternion;
         //set velocity
-        odometry.child_frame_id = "baseLInk";
+        odometry.child_frame_id = "baseLink";
         odometry.twist.twist.linear.x = vx;
         odometry.twist.twist.linear.y = 0;
         odometry.twist.twist.angular.z = w;
 
+        //publish custom odometry
+        customOdometry.odom = odometry;
+        if(integrationType==0)
+            customOdometry.method.data = "euler";
+        else
+            customOdometry.method.data = "rk";
+
+        custom_pub.publish(customOdometry);
+
         //publish odometry
-        msg.odom = odometry;
         odom_pub.publish(odometry);
-        custom_pub.publish(msg);
     }
 
     void publishTfTransformation(ros::Time currentTime){
