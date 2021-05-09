@@ -6,6 +6,9 @@
 #include <sstream>
 #include <dynamic_reconfigure/server.h>
 #include "project_1/integrationConfig.h"
+#include "project_1/reset.h"
+#include "project_1/reset_general.h"
+
 
 class Pub_sub_odometry {
 
@@ -14,6 +17,8 @@ private:
     ros::Subscriber sub;
     ros::Publisher odom_pub;
     ros::Publisher custom_pub;
+    ros::ServiceServer resetZeroService;
+    ros::ServiceServer resetGeneralService;
 
     ros::Time lastTime;
     double x,y,th;
@@ -28,6 +33,8 @@ public:
 
         odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);
         custom_pub = n.advertise<project_1::CustomOdometry>("/custom", 1);
+        resetZeroService = n.advertiseService("reset_zero" , &Pub_sub_odometry::resetZero, this);
+        resetGeneralService = n.advertiseService("reset_general" , &Pub_sub_odometry::resetGeneral, this);
         lastTime = ros::Time::now();
         //TODO: Devono essere sempre inizializzati a 0?
         x = 0;
@@ -123,6 +130,23 @@ public:
 
     void setIntegration(project_1::integrationConfig &config){
         integrationType = config.integration;
+    }
+
+    bool resetZero(project_1::reset::Request  &req,
+                   project_1::reset::Response &res)
+    {
+        x = 0;
+        y = 0;
+        return true;
+    }
+
+    bool resetGeneral(project_1::reset_general::Request  &req,
+                      project_1::reset_general::Response &res)
+    {
+        x = req.x;
+        y = req.y;
+        th = req.th;
+        return true;
     }
 };
 

@@ -18,6 +18,12 @@ generate_dynamic_reconfigure_options(
 		cfg/integration.cfg
 )
 
+add_service_files(
+		FILES
+		reset.srv
+		reset_general.srv
+)
+
 add_message_files(
 	FILES 
 	CustomOdometry.msg
@@ -66,5 +72,8 @@ add_dependencies(AgileXCore project_1_generate_messages_cpp)
 
 #For dynamic reconfigure
 add_dependencies(AgileXCore ${PROJECT_NAME}_gencfg)
+
+#for services
+add_dependencies(AgileXCore ${catkin_EXPORTED_TARGETS})
 
 
