@@ -29,7 +29,7 @@ private:
 
 public:
     Pub_sub_odometry() {
-        sub = n.subscribe("/twist", 1, &Pub_sub_odometry::computeOdometry2, this);
+        sub = n.subscribe("/twist", 1, &Pub_sub_odometry::computeOdometry, this);
 
         odom_pub = n.advertise<nav_msgs::Odometry>("/odometry", 1);
         custom_pub = n.advertise<project_1::CustomOdometry>("/custom", 1);
@@ -43,7 +43,7 @@ public:
         integrationType = 0;
     }
 
-    void computeOdometry2(const geometry_msgs::TwistStamped::ConstPtr& msg){
+    void computeOdometry(const geometry_msgs::TwistStamped::ConstPtr& msg){
         double vx, w, dt;
         ros::Time currentTime;
 
@@ -84,7 +84,7 @@ public:
         project_1::CustomOdometry customOdometry;
 
         //set header
-        odometry.header.stamp = currentTime; //todo: time::now() o currentTime?
+        odometry.header.stamp = currentTime;
         odometry.header.frame_id = "odom";
         //set pose
         odometry.pose.pose.position.x = x;
