@@ -1,12 +1,12 @@
-Barbiero Alessandro
+Barbiero Alessandro (...)
 Borsatto Andrea (10628989)
-... ...
+... Leonardo (...)
 
 STRUCTURE OF THE PACKAGE:
 We provided a package containing different folders:
 - cfg: containing the python file for the dynamic reconfigure of the integration type; this file contains an enum with the two possible type of integration, the default one is Euler integration
 
-- launch: containing the launch file of the project that (starts the bag(???),) starts all the necessary nodes and rviz (AGGIUNGERE COSE)
+- launch: containing the launch file of the project that starts the bag, all the necessary nodes and rviz ...(AGGIUNGERE QUALCOSA ANCORA)...
 
 - msg: containing our custom messages:
 	> CustomOdometry.msg is the structure of the message that publishes the computed odometry and the integration method that has been chosen
@@ -19,21 +19,21 @@ We provided a package containing different folders:
 	> reset_general.srv that changes the pose of the robot to the one sent inside the request
 
 - src: containing the files of the nodes:
-	> LateralWheelSync: this node is used to synchronize the messages coming from one side of the motor; it synchronizes the messages, computes the averege of the RPMs of the motors 			and then computes the linear velocity of the wheel; finally it publishes a custom message of type "Speed" on a topic. This node is launched two times inside the launch 		file (with appropriate remaps for the topics) because it is used to synchronize the velocities on the two sides of the skid steering robot and to publish them into 			"/synchVelocity_l" and "/synchVelocity_r" topics
+	> LateralWheelSync: this node is used to synchronize the messages coming from one side of the motor; it synchronizes the messages, computes the averege of the RPMs of the motors and then computes the linear velocity of the wheel; finally it publishes a custom message of type "Speed" on a topic. This node is launched two times inside the launch file (with appropriate remaps for the topics) because it is used to synchronize the velocities on the two sides of the skid steering robot and to publish them into "/synchVelocity_l" and "/synchVelocity_r" topics
 	
-	> GlobalSync:  this node is used to synchronize the messages published by the two LateralWheelSync nodes on "/synchVelocity_l" and "/synchVelocity_r" topics, to compute the 			values of the linear and the angular velocities of the robot (using the skid steering approximate kinematics) and to publish them as a "TwistStamped" message.
+	> GlobalSync:  this node is used to synchronize the messages published by the two LateralWheelSync nodes on "/synchVelocity_l" and "/synchVelocity_r" topics, to compute the values of the linear and the angular velocities of the robot (using the skid steering approximate kinematics) and to publish them as a "TwistStamped" message.
 	
-	> AgileXCore: this node is used to compute the odometry of the robot, to publish all the messages and to expose the callback for the services. The node reads the "TwistStamped" 			messages published by GlobalSync node and, based on the value of the param "integration", it computes the odometry of the robot using Euler or Runge-Kutta integration. 		After this it publishes the odometry on a topic and publishes the tf transformation.
-		For the integration type, the node uses the dynamic reconfigure to set the integration type; the default value is "Euler" and whenever the user changes the param a 			callback is executed, changing the value of the field "integrationType" of the class Pub_Sub_Odometry.
-		The node exposes also two callbacks for two seervices: "resetZero", that set the x and y positions to 0 when the user calls the service; and "resetGeneral", that set the 			pose of the robot equal to the value x, y and theta that the user passes when calls the service.
-		...INITIAL POSE...
+	> AgileXCore: this node is used to compute the odometry of the robot, to publish all the messages and to expose the callback for the services. The node reads the "TwistStamped" messages published by GlobalSync node and, based on the value of the param "integration", it computes the odometry of the robot using Euler or Runge-Kutta integration. After this it publishes the odometry on a topic and publishes the tf transformation.
+		For the integration type, the node uses the dynamic reconfigure to set the integration type; the default value is "Euler" and whenever the user changes the param a callback is executed, changing the value of the field "integrationType" of the class Pub_Sub_Odometry.
+		The node exposes also two callbacks for two seervices: "resetZero", that set the x and y positions to 0 when the user calls the service; and "resetGeneral", that set the pose of the robot equal to the value x, y and theta that the user passes when calls the service.
+		The node read the initial pose of the robot from the params declared in the launch file and sets the x, y and theta of the robot
 	
 	> BaselineCalculator: ...
 
 
 ROSPARAMS:
-We used rosParameters for the integration type, named "integration" ; we created an enum with two integer values: "Euler" = 0 and "Runge_Kutta" = 1
-...INITIAL POSE PARAMS...
+We used rosParameters for the integration type, named "integration"; we created an enum with two integer values: "Euler" = 0 and "Runge_Kutta" = 1
+We also used rosParameters in the launch file to set the initial pose of the robot; AgileXCore node reads the parameters and sets x,y,theta in the in the constructor of Pub_sub_odometry. We decided to use 3 params: "InitialX", "InitialY" and "InitialTheta", all set to zero
 
 
 TF TREE:

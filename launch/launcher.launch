@@ -1,9 +1,7 @@
 <launch>
-    <!--
-    <param name="InitialX" value=0 />
-    <param name="InitialY" value=0 />
-    <param name="InitialTheta" value=0 />
--->
+    <param name="InitialX" type="int" value="0" />
+    <param name="InitialY" type="int" value="0" />
+    <param name="InitialTheta" type="int" value="0" />
 
     <!-- Launch the bag1 and show on screen -->
     <arg name="path" default="/bags/" />

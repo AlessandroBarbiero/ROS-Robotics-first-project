@@ -36,10 +36,11 @@ public:
         resetZeroService = n.advertiseService("reset_zero" , &Pub_sub_odometry::resetZero, this);
         resetGeneralService = n.advertiseService("reset_general" , &Pub_sub_odometry::resetGeneral, this);
         lastTime = ros::Time::now();
-        //TODO: Devono essere sempre inizializzati a 0?
-        x = 0;
-        y = 0;
-        th = 0;
+
+        //Reads param from launch file
+        n.getParam("/InitialX", x);
+        n.getParam("/InitialY", y);
+        n.getParam("/InitialTheta", th);
         integrationType = 0;
     }
 
@@ -56,7 +57,6 @@ public:
         vx = msg->twist.linear.x;
         w = msg->twist.angular.z;
 
-        //ROS_INFO("INT TYPE: %d", integrationType);
         //Integration
         if(integrationType == 0) { //EULER
             x += vx * cos(th) * dt;
