@@ -137,6 +137,8 @@ public:
     {
         x = 0;
         y = 0;
+        ROS_INFO("x reset to: %f", x);
+        ROS_INFO("y reset to: %f", y);
         return true;
     }
 
@@ -146,6 +148,9 @@ public:
         x = req.x;
         y = req.y;
         th = req.th;
+        ROS_INFO("x reset to: %f", x);
+        ROS_INFO("y reset to: %f", y);
+        ROS_INFO("th reset to: %f", th);
         return true;
     }
 };
