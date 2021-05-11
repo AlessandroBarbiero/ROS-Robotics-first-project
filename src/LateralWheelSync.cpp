@@ -6,7 +6,7 @@
 #include <message_filters/sync_policies/approximate_time.h>
 #define RPM_IN_RADIANS 0.10472
 #define WHEEL_RADIUS 0.1575
-#define GEAR_RATIO 1/35  //todo: calcolare quello reale
+#define GIVEN_GEAR_RATIO 1/35  //todo: calcolare quello reale
 class LateralWheelSync
 {
 private:
@@ -37,7 +37,7 @@ public:
         ROS_INFO ("syncCallback");
         project_1::Speed speed;
         speed.header = msg1->header;
-        speed.metersXSecond = (msg1->rpm + msg2->rpm)*RPM_IN_RADIANS*GEAR_RATIO*WHEEL_RADIUS/2;
+        speed.metersXSecond = (msg1->rpm + msg2->rpm) * RPM_IN_RADIANS * GIVEN_GEAR_RATIO * WHEEL_RADIUS / 2;
         pub.publish(speed);
     }
 
@@ -46,7 +46,7 @@ public:
         ROS_INFO ("syncCallback");
         project_1::Speed speed;
         speed.header = msg1->header;
-        speed.metersXSecond = (-msg1->rpm - msg2->rpm)*RPM_IN_RADIANS*GEAR_RATIO*WHEEL_RADIUS/2;
+        speed.metersXSecond = (-msg1->rpm - msg2->rpm) * RPM_IN_RADIANS * GIVEN_GEAR_RATIO * WHEEL_RADIUS / 2;
         pub.publish(speed);
     }
 

@@ -4,6 +4,8 @@
 #include "std_msgs/Float64.h"
 #include <message_filters/subscriber.h>
 #include <message_filters/sync_policies/approximate_time.h>
+#define GIVEN_GEAR_RATIO 1/35
+
 class BaselineCalculator
 {
 private:
@@ -23,7 +25,7 @@ public:
         sub1.subscribe(n, "/syncVelocity_l", 1);
         sub2.subscribe(n, "/syncVelocity_r", 1);
         sub3.subscribe(n, "/scout_odom", 1);
-        pub = n.advertise<std_msgs::Float64>("/baseline", 1);
+        pub = n.advertise<std_msgs::Float64>("/gearRatio", 1);
         sync.reset(new Sync(MySyncPolicy(10), sub1, sub2, sub3));
         sync->registerCallback(boost::bind(&BaselineCalculator::syncCallback, this, _1, _2, _3));
         count = 0;
@@ -34,12 +36,12 @@ public:
         ROS_INFO ("processing baseline calculation");
         std_msgs::Float64 result;
 
-        double angularVelocity = odom->twist.twist.angular.z;
-        double speedR = velR->metersXSecond;
-        double speedL = velL->metersXSecond;
+        double linearVelocity = odom->twist.twist.linear.x;
+        double speedR = velR->metersXSecond / GIVEN_GEAR_RATIO;
+        double speedL = velL->metersXSecond / GIVEN_GEAR_RATIO;
 
-        if(angularVelocity>0.005) {
-            gearRatioSum += (speedR - speedL) / angularVelocity;
+        if((speedR - speedL)>0) {
+            gearRatioSum += 2*linearVelocity / (speedR - speedL);
             count++;
         }
 

@@ -1,4 +1,5 @@
 <launch>
+    <!-- Set the initial pose of the robot -->
     <param name="InitialX" type="int" value="0" />
     <param name="InitialY" type="int" value="0" />
     <param name="InitialTheta" type="int" value="0" />
@@ -30,19 +31,8 @@
     <!-- Launch the dynamic configurator -->
     <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 
-    <!-- Launch the node for baseline calculation, not necessary -->
+    <!-- Launch the node for baseline calculation, not necessary >
     <node pkg="project_1" type="BaselineCalculator" name="BaselineCalculator"/>
-
-    <!-- Attempt to Launch the echo of the /twist but the terminator window close immediately after open, so is useless >
-    <arg name="topic1"     default="/twist"/>
-    <node pkg="rostopic" type="rostopic" name="TwistListener"
-          args="echo $(arg topic1)"  launch-prefix="terminator - -new-tab -x" />
-
--->
-
-    <!-- the others...
-    <node pkg="package" type="file_name" name="node_name"/>
-    <node pkg="package" type="file_name" name="node_name"/>
 -->
 
     <!-- opens rviz with custom configuration -->
