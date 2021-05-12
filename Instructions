@@ -43,11 +43,12 @@ We provided a package containing different folders:
 	    In order to exclude biased values, the baseline is calculated like the average of the calculated baselines only for value of angular velocity > 0.005.
 	    The outcome of this calculation is an apparent baseline of 1.129 m.
 
+    > GearRatioCalculator: ...
 
 ROSPARAMS:
 We used rosParameters for the integration type, named "integration"; we created an enum with two integer values: "Euler" = 0 and "Runge_Kutta" = 1
 We also used rosParameters in the launch file to set the initial pose of the robot; AgileXCore node reads the parameters and sets x,y,theta in the in the constructor of Pub_sub_odometry.
- We decided to use 3 params: "InitialX", "InitialY" and "InitialTheta", all set to zero, for different initialization the user can change the parameters in the launch file or call the apposite service.
+We decided to use 3 params: "InitialX", "InitialY" and "InitialTheta", all set to zero, for different initialization the user can change the parameters in the launch file or call the apposite service.
 
 
 TF TREE:

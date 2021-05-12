@@ -33,8 +33,10 @@
 
     <!-- Launch the node for baseline calculation, not necessary >
     <node pkg="project_1" type="BaselineCalculator" name="BaselineCalculator"/>
--->
 
+    <!-- Launch the node for baseline calculation, not necessary -->
+    <node pkg="project_1" type="GearRatioCalculator" name="GearRatioCalculator"/>
+-->
     <!-- opens rviz with custom configuration -->
     <node type="rviz" name="rviz" pkg="rviz" args="-d $(find project_1)/rviz/project_1.rviz" />
 

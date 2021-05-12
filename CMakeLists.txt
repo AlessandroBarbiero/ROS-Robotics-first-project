@@ -62,6 +62,9 @@ target_link_libraries(GlobalSync ${catkin_LIBRARIES})
 add_executable(BaselineCalculator src/BaselineCalculator.cpp)
 target_link_libraries(BaselineCalculator ${catkin_LIBRARIES})
 
+add_executable(GearRatioCalculator src/GearRatioCalculator.cpp)
+target_link_libraries(GearRatioCalculator ${catkin_LIBRARIES})
+
 
 # Add this only for nodes that requires the specific custom message generated in the package
 # add_dependencies(LateralWheelSync robotics_hw1_generate_messages_cpp)
@@ -69,6 +72,7 @@ add_dependencies(LateralWheelSync project_1_generate_messages_cpp)
 add_dependencies(GlobalSync project_1_generate_messages_cpp)
 add_dependencies(BaselineCalculator project_1_generate_messages_cpp)
 add_dependencies(AgileXCore project_1_generate_messages_cpp)
+add_dependencies(GearRatioCalculator project_1_generate_messages_cpp)
 
 #For dynamic reconfigure
 add_dependencies(AgileXCore ${PROJECT_NAME}_gencfg)
