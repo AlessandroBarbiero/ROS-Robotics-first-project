@@ -41,9 +41,12 @@ We provided a package containing different folders:
 	> BaselineCalculator: this node is a utility node built for calculating the apparent baseline for the approximation of the skid steering kinematics.
 	    It calculates the baseline synchronizing the messages from "/syncVelocity_l", "/syncVelocity_r", and "/scout_odom" and using the inverse formula for calculus of the angular velocity.
 	    In order to exclude biased values, the baseline is calculated like the average of the calculated baselines only for value of angular velocity > 0.005.
-	    The outcome of this calculation is an apparent baseline of 1.129 m.
+	    The outcome of this calculation is an apparent baseline of 1.0467 m.
 
-    > GearRatioCalculator: ...
+    > GearRatioCalculator: this node is a utility node built for calculating the gear ratio of the wheels.
+        It calculates the gear ratio synchronizing the messages from "/scout_odom" and "/odometry" and computing the ratio between the linear velocity given by "/scout_odom" and the linear velocity given by "/odometry" without the manual gear ratio.
+        In order to exclude biased values, the gear ratio is calculated like the average of the calculated gear ratios only for value of linear velocity > 0.
+        The outcome of this calculation is a gear ratio of 1/38.2.
 
 ROSPARAMS:
 We used rosParameters for the integration type, named "integration"; we created an enum with two integer values: "Euler" = 0 and "Runge_Kutta" = 1
