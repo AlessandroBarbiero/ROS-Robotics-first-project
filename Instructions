@@ -64,6 +64,9 @@ As previously discussed we used two custom messages:
 
 HOW TO RUN:
 ...
+NB: the ros command to set the initial position for the 2nd bag is: rosservice call /reset_general -- -2.81132697617 0.784711979093 3.0537938
+    the ros command to set the initial position for the 3rd bag is: rosservice call /reset_general -- -2.28603390243 -1.44419248415 -1.8231358
+
 
 	
 
