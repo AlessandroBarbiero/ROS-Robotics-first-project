@@ -6,7 +6,9 @@
 
     <!-- Launch the bag1 and show on screen -->
     <arg name="path" default="/bags/" />
-    <arg name="file1" default="bag1" />
+    <!-- <arg name="file1" default="bag1" />-->
+    <arg name="file1" default="bag2" />
+    <!-- <arg name="file1" default="bag3" /> -->
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
     <!-- Set the static transformation -->
@@ -33,8 +35,8 @@
 
     <!-- Launch the node for baseline calculation, not necessary >
     <node pkg="project_1" type="BaselineCalculator" name="BaselineCalculator"/>
-
-    <!-- Launch the node for baseline calculation, not necessary -->
+-->
+    <!-- Launch the node for baseline calculation, not necessary >
     <node pkg="project_1" type="GearRatioCalculator" name="GearRatioCalculator"/>
 -->
     <!-- opens rviz with custom configuration -->
