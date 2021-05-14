@@ -4,11 +4,14 @@
     <param name="InitialY" type="int" value="0" />
     <param name="InitialTheta" type="int" value="0" />
 
-    <!-- Launch the bag1 and show on screen -->
+    <!-- Launch the bag and show on screen -->
     <arg name="path" default="/bags/" />
-    <!-- <arg name="file1" default="bag1" />-->
-    <arg name="file1" default="bag2" />
+
+    <!--BAGS-->
+    <arg name="file1" default="bag1" />
+    <!-- <arg name="file1" default="bag2" /> -->
     <!-- <arg name="file1" default="bag3" /> -->
+
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
     <!-- Set the static transformation -->
