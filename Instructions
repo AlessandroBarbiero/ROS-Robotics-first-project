@@ -60,9 +60,9 @@ We decided to use 3 params: "InitialX", "InitialY" and "InitialTheta", all set t
 
 
 TF TREE:
-Our tf tree is composed of three transformation frame (world, odom and base_link):
+Our tf tree is composed of three transformation frames (world, odom and base_link):
     > a static transformation links the world frame to the odom frame, the relation is thought in order to match the gt_pose data with odom calculation,
-      however we realize that this transformation fits only for the first bag and so it is not so useful.
+      however we realize that this transformation fits only for the first bag.
     > the transformation between odom and base_link is the one responsible for the real localization of the robot in the space
 
 CUSTOM MESSAGES:

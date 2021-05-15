@@ -8,8 +8,8 @@
     <arg name="path" default="/bags/" />
 
     <!--BAGS-->
-     <arg name="file1" default="bag1" />
-    <!-- <arg name="file1" default="bag2" /> -->
+    <!-- <arg name="file1" default="bag1" /> -->
+     <arg name="file1" default="bag2" />
     <!-- <arg name="file1" default="bag3" /> -->
 
     <!-- Launch the bag and show on screen -->
