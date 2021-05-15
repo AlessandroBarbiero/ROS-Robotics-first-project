@@ -6,7 +6,12 @@ STRUCTURE OF THE PACKAGE:
 We provided a package containing different folders:
 - cfg: containing the python file for the dynamic reconfigure of the integration type; this file contains an enum with the two possible type of integration, the default one is Euler integration
 
-- launch: containing the launch file of the project that starts all the necessary nodes, rviz and rqt_reconfigure_params window
+- launch: containing the launch file of the project that starts all the necessary nodes, rviz and rqt_reconfigure window:
+    > initial pose of the robot is set by three parameters: - InitialX
+                                                            - InitialY
+                                                            - InitialTheta
+    > the link between world and odom frame is set by a static transformation
+    > the two lateralWheelSync nodes for the two sides of the robot are launched remapping the topics in the correct way and passing a parameter for setting direction of rotation
 
 - msg: containing our custom messages:
 	> CustomOdometry.msg is the structure of the message that publishes the computed odometry and the integration method that has been chosen
@@ -55,7 +60,10 @@ We decided to use 3 params: "InitialX", "InitialY" and "InitialTheta", all set t
 
 
 TF TREE:
-...
+Our tf tree is composed of three transformation frame (world, odom and base_link):
+    > a static transformation links the world frame to the odom frame, the relation is thought in order to match the gt_pose data with odom calculation,
+      however we realize that this transformation fits only for the first bag and so it is not so useful.
+    > the transformation between odom and base_link is the one responsible for the real localization of the robot in the space
 
 CUSTOM MESSAGES:
 As previously discussed we used two custom messages:

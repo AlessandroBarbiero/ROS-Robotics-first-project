@@ -4,7 +4,7 @@
     <param name="InitialY" type="int" value="0" />
     <param name="InitialTheta" type="int" value="0" />
 
-    <!-- Launch the bag and show on screen -->
+    <!-- Set here the path for bags file -->
     <arg name="path" default="/bags/" />
 
     <!--BAGS-->
@@ -12,6 +12,7 @@
     <!-- <arg name="file1" default="bag2" /> -->
     <!-- <arg name="file1" default="bag3" /> -->
 
+    <!-- Launch the bag and show on screen -->
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find project_1)$(arg path)$(arg file1).bag"/>
 
     <!-- Set the static transformation -->
@@ -39,7 +40,7 @@
     <!-- Launch the node for baseline calculation, not necessary >
     <node pkg="project_1" type="BaselineCalculator" name="BaselineCalculator"/>
 -->
-    <!-- Launch the node for baseline calculation, not necessary >
+    <!-- Launch the node for gear ratio calculation, not necessary >
     <node pkg="project_1" type="GearRatioCalculator" name="GearRatioCalculator"/>
 -->
     <!-- opens rviz with custom configuration -->

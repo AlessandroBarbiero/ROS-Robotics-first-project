@@ -9,7 +9,6 @@
 #include "project_1/reset.h"
 #include "project_1/reset_general.h"
 
-
 class Pub_sub_odometry {
 
 private:

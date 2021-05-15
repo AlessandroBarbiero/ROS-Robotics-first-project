@@ -5,7 +5,10 @@
 #include <message_filters/subscriber.h>
 #include <message_filters/sync_policies/approximate_time.h>
 // BASELINE 0.583  // real baseline
-#define BASELINE 1.0467159947 //final baseline after GR
+// BASELINE 1.16125063068 // first attempt considering all the angular velocities over 0 rad/s (before gear ratio calculation)
+// BASELINE 1.129 // second attempt considering only angular velocities over 0.005 rad/s (before gear ratio calculation)
+
+#define BASELINE 1.0467159947 // final baseline after GR
 
 class GlobalSync
 {

@@ -29,8 +29,6 @@ add_message_files(
 	CustomOdometry.msg
 	Speed.msg
 	)
-#add this when implementing services
-# add_service_files(FILES custom_service.srv)
 
 generate_messages(
 	DEPENDENCIES 
@@ -46,13 +44,12 @@ catkin_package(
 	message_filters
 	geometry_msgs
 	)
-#never change this line
+
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(AgileXCore src/AgileXCore.cpp)
 target_link_libraries(AgileXCore ${catkin_LIBRARIES})
 
-# This two lines are needed for every node
 add_executable(LateralWheelSync src/LateralWheelSync.cpp)
 target_link_libraries(LateralWheelSync ${catkin_LIBRARIES})
 
@@ -67,7 +64,6 @@ target_link_libraries(GearRatioCalculator ${catkin_LIBRARIES})
 
 
 # Add this only for nodes that requires the specific custom message generated in the package
-# add_dependencies(LateralWheelSync robotics_hw1_generate_messages_cpp)
 add_dependencies(LateralWheelSync project_1_generate_messages_cpp)
 add_dependencies(GlobalSync project_1_generate_messages_cpp)
 add_dependencies(BaselineCalculator project_1_generate_messages_cpp)
