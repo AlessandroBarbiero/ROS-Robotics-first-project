@@ -4,6 +4,7 @@
 #include "std_msgs/Float64.h"
 #include <message_filters/subscriber.h>
 #include <message_filters/sync_policies/approximate_time.h>
+
 class BaselineCalculator
 {
 private:

@@ -6,7 +6,7 @@ STRUCTURE OF THE PACKAGE:
 We provided a package containing different folders:
 - cfg: containing the python file for the dynamic reconfigure of the integration type; this file contains an enum with the two possible type of integration, the default one is Euler integration
 
-- launch: containing the launch file of the project that starts the bag, all the necessary nodes and rviz ...(AGGIUNGERE QUALCOSA ANCORA)...
+- launch: containing the launch file of the project that starts all the necessary nodes, rviz and rqt_reconfigure_params window
 
 - msg: containing our custom messages:
 	> CustomOdometry.msg is the structure of the message that publishes the computed odometry and the integration method that has been chosen
@@ -69,7 +69,6 @@ HOW TO RUN:
 The launch file opens all the necessary tools:
 (You can specify the bag you want to run, inside the launch file, choosing one of the alternatives)
 The command: roslaunch project_1 launcher.launch
-  > opens the chosen bag and starts it;
   > starts all the necessary nodes;
   > opens rviz, that shows the scout_odom(light blue arrow), our odometry(red arrow) read from the "/odometry" topic,
     the gt_pose(green arrow) and the necessary static transformations;
@@ -79,7 +78,7 @@ The two services can be used with these commands:
     > "rosservice call /reset_zero" to reset the position of the robot to (x=0, y=0)
     > "rosservice call /reset_general -- x y th" to set the pose of the robot equal to the value x, y and th passed as params of the call
 
-To set the initial pose of the robot for bag 2 and 3 we used these commands:
+To set the initial pose of the robot equal to scout_odom pose you can either change the parameters in the launch file or use this commands:
     > for the 2nd bag: rosservice call /reset_general -- -2.81132697617 0.784711979093 3.0537938
     > for the 3rd bag: rosservice call /reset_general -- -2.28603390243 -1.44419248415 -1.8231358
 

@@ -8,6 +8,7 @@
 #define WHEEL_RADIUS 0.1575
 #define GIVEN_GEAR_RATIO 1/35
 #define COMPUTED_GEAR_RATIO 1/38.2 //0.026122942759
+
 class LateralWheelSync
 {
 private:
@@ -50,8 +51,6 @@ public:
         speed.metersXSecond = (-msg1->rpm - msg2->rpm) * RPM_IN_RADIANS * COMPUTED_GEAR_RATIO * WHEEL_RADIUS / 2;
         pub.publish(speed);
     }
-
-
 };
 
 int main(int argc, char **argv)
